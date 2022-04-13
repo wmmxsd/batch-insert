@@ -85,7 +85,7 @@ public class App {
     public static ExecutorService buildThreadPool() {
         System.out.println("创建批量将sql写入到文件的线程池-end");
         AtomicInteger index = new AtomicInteger(0);
-        return new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors() * 2, Runtime.getRuntime().availableProcessors() * 2, 100,
+        return new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors() * 5, Runtime.getRuntime().availableProcessors() * 10, 100,
                 TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), r -> new Thread(r, "sql-to-file-" + index.getAndIncrement()), new ThreadPoolExecutor.AbortPolicy());
     }
 
