@@ -3,9 +3,6 @@ package file.impl;
 import file.AbstractSqlFile;
 import utils.UUIDUtil;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class SwitchOnlineAndOfflineAudit extends AbstractSqlFile {
     public SwitchOnlineAndOfflineAudit(Integer index) {
         super(index);
