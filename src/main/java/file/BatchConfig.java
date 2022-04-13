@@ -12,8 +12,8 @@ import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 public class BatchConfig {
-    public static int SQL_COUNTS_IN_FILE = 50000;
-    public static int CIRCLE = 2;
+    public static int SQL_COUNTS_IN_FILE = 20000;
+    public static int CIRCLE = 20;
     public static String DIRECTORY_PATH = "E:\\test\\";
 
     public static DataSource dataSource;

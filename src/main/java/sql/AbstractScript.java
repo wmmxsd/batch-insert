@@ -1,19 +1,10 @@
 package sql;
 
-import file.SqlFile;
 import utils.Resources;
 import utils.ScriptRunner;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.Collections;
-import java.util.stream.IntStream;
-
-import static file.BatchConfig.*;
-import static file.BatchConfig.semaphore;
+import static file.BatchConfig.DIRECTORY_PATH;
+import static file.BatchConfig.dataSource;
 
 public abstract class AbstractScript implements Script {
     private final Integer index;
@@ -32,7 +23,7 @@ public abstract class AbstractScript implements Script {
             /*System.out.println("[runScript] " + "semaphore:" + semaphore.availablePermits());
             semaphore.acquire();*/
             ScriptRunner scriptRunner = new ScriptRunner(dataSource.getConnection());
-            scriptRunner.setSendFullScript(true);
+            scriptRunner.setSendFullScript(false);
             scriptRunner.setLogWriter(null);
             scriptRunner.runScript(Resources.getFileAsReader(DIRECTORY_PATH + fileName + index + ".sql"));
             scriptRunner.closeConnection();
