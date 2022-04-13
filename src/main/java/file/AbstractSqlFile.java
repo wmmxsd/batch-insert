@@ -10,34 +10,38 @@ import java.util.stream.IntStream;
 
 import static file.BatchConfig.*;
 
-public abstract class AbstractSqlFile implements SqlFile{
+public abstract class AbstractSqlFile implements SqlFile {
+    private final Integer index;
+
+    public AbstractSqlFile(Integer index) {
+        this.index = index;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
     @Override
     public void writeToFile(String fileName) {
-        for (int index = 0; index < CIRCLE; index++) {
-            Path path = null;
-            String sqlFileName = null;
-            try {
-                synchronized (AbstractSqlFile.class) {
-                    if (Files.notExists(Paths.get(DIRECTORY_PATH))) {
-                        Files.createDirectory(Paths.get(DIRECTORY_PATH));
-                    }
-                }
-                sqlFileName = DIRECTORY_PATH + fileName + index + ".sql";
-                Files.deleteIfExists(Paths.get(sqlFileName));
-                path = Files.createFile(Paths.get(sqlFileName));
+        Path path = null;
+        String sqlFileName = null;
+        try {
+            sqlFileName = DIRECTORY_PATH + fileName + index + ".sql";
+            Files.deleteIfExists(Paths.get(sqlFileName));
+            path = Files.createFile(Paths.get(sqlFileName));
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Path finalPath = path;
+        IntStream.range(0, SQL_COUNTS_IN_FILE).forEach(count -> {
+            try {
+                assert finalPath != null;
+                Files.write(finalPath, Collections.singletonList(generateSql()), StandardOpenOption.APPEND);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Path finalPath = path;
-            IntStream.range(0, SQL_COUNTS_IN_FILE).forEach(count -> {
-                try {
-                    Files.write(finalPath, Collections.singletonList(generateSql()), StandardOpenOption.APPEND);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-            System.out.println(Thread.currentThread().getName() + " : " + SQL_COUNTS_IN_FILE + "行sql写入" + sqlFileName + "：end");
-        }
+        });
+        System.out.println(Thread.currentThread().getName() + " : " + SQL_COUNTS_IN_FILE + "行sql写入" + sqlFileName + "：end");
     }
 }

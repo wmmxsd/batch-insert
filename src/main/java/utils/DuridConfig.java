@@ -14,10 +14,4 @@ public class DuridConfig {
         prop.load(resourceAsStream);
         return DruidDataSourceFactory.createDataSource(prop);
     }
-
-    public static void main(String[] args) throws Exception {
-        DataSource dataSource = buildDataSource();
-        Connection connection = dataSource.getConnection();
-        connection.close();
-    }
 }

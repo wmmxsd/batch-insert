@@ -1,13 +1,16 @@
 package sql.impl;
 
+import sql.AbstractScript;
 import sql.Script;
 
-public class ThirdPlatformOutAuditScript implements Script {
+public class ThirdPlatformOutAuditScript extends AbstractScript {
+    public ThirdPlatformOutAuditScript(Integer index) {
+        super(index);
+    }
+
     @Override
     public Boolean call() {
-        System.out.println("执行文件名前缀为n4a_audit_otherplatform_done_out_20200001-的脚本：begin");
         runScript("n4a_audit_otherplatform_done_out_20200001-");
-        System.out.println("执行文件名前缀为n4a_audit_otherplatform_done_out_20200001-的脚本：end");
         return true;
     }
 }

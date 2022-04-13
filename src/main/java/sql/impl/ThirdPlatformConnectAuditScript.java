@@ -1,13 +1,16 @@
 package sql.impl;
 
+import sql.AbstractScript;
 import sql.Script;
 
-public class ThirdPlatformConnectAuditScript implements Script {
+public class ThirdPlatformConnectAuditScript extends AbstractScript {
+    public ThirdPlatformConnectAuditScript(Integer index) {
+        super(index);
+    }
+
     @Override
     public Boolean call() {
-        System.out.println("执行文件名前缀为n4a_audit_otherplatform_connect-的脚本：begin");
         runScript("n4a_audit_otherplatform_connect-");
-        System.out.println("执行文件名前缀为n4a_audit_otherplatform_connect-的脚本：end");
         return true;
     }
 }

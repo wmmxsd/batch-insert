@@ -16,8 +16,4 @@ public class FileUtil {
         }
         file.delete();
     }
-
-    public static void main(String[] args) {
-        deletFile(Paths.get("E:\\test").toString());
-    }
 }
