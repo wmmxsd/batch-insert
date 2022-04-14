@@ -8,7 +8,8 @@ import java.nio.file.StandardOpenOption;
 import java.util.Collections;
 import java.util.stream.IntStream;
 
-import static file.BatchConfig.*;
+import static file.BatchConfig.DIRECTORY_PATH;
+import static file.BatchConfig.SQL_COUNTS_IN_FILE;
 
 public abstract class AbstractSqlFile implements SqlFile {
     private final Integer index;
@@ -27,6 +28,7 @@ public abstract class AbstractSqlFile implements SqlFile {
         String sqlFileName = null;
         try {
             sqlFileName = DIRECTORY_PATH + fileName + index + ".sql";
+            System.out.println(Thread.currentThread().getName() + " : " + SQL_COUNTS_IN_FILE + "行sql写入" + sqlFileName + "：begin...");
             Files.deleteIfExists(Paths.get(sqlFileName));
             path = Files.createFile(Paths.get(sqlFileName));
 
@@ -42,6 +44,6 @@ public abstract class AbstractSqlFile implements SqlFile {
                 e.printStackTrace();
             }
         });
-        System.out.println(Thread.currentThread().getName() + " : " + SQL_COUNTS_IN_FILE + "行sql写入" + sqlFileName + "：end");
+        System.out.println(Thread.currentThread().getName() + " : " + SQL_COUNTS_IN_FILE + "行sql写入" + sqlFileName + "：successful");
     }
 }

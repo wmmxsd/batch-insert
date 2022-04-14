@@ -22,7 +22,6 @@ public class BatchConfig {
     public static List<String> ipList = new ArrayList<>();
 
     static {
-        System.out.println("System.lineSeparator()" + System.lineSeparator());
         try {
             if ("\n".equals(System.lineSeparator())) {
                 DIRECTORY_PATH = "/usr/ASN/sql-insert/";

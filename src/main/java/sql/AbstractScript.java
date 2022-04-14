@@ -20,6 +20,7 @@ public abstract class AbstractScript implements Script {
     @Override
     public void runScript(String fileName) {
         try {
+            System.out.println(Thread.currentThread().getName() + " : run " + DIRECTORY_PATH + fileName + index + ".sql：begin...");
             /*System.out.println("[runScript] " + "semaphore:" + semaphore.availablePermits());
             semaphore.acquire();*/
             ScriptRunner scriptRunner = new ScriptRunner(dataSource.getConnection());
@@ -27,7 +28,7 @@ public abstract class AbstractScript implements Script {
             scriptRunner.setLogWriter(null);
             scriptRunner.runScript(Resources.getFileAsReader(DIRECTORY_PATH + fileName + index + ".sql"));
             scriptRunner.closeConnection();
-            System.out.println(Thread.currentThread().getName() + " : run " + DIRECTORY_PATH + fileName + index + ".sql：end");
+            System.out.println(Thread.currentThread().getName() + " : run " + DIRECTORY_PATH + fileName + index + ".sql：successful");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
