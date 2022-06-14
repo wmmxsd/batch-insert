@@ -8,16 +8,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static file.BatchConfig.ip;
-import static file.BatchConfig.ipList;
+import static utils.ColumnValueUtil.*;
 
 public class Event extends AbstractSqlFile {
     private final String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     private final String dateNow = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
     private AtomicInteger id = new AtomicInteger(1);
-
-    private final Random random = new Random();
 
     private String sql = "INSERT INTO `icssas_event_" + dateNow +
             "` (`id`, `infoType`, `threatType`, `attackType`, `level`, `sourceIp`, `sourceMac`, `sourcePort`, `desIp`, `desMac`, `desPort`, `protocol`, `alarmTime`, `assetIp`, `content`, `remarks`, `status`)" +
@@ -30,12 +27,12 @@ public class Event extends AbstractSqlFile {
 
     @Override
     public String generateSql() {
-        return getRandomSql(random.nextInt(7));
+        return getRandomSql(RANDOM.nextInt(7));
     }
 
     @Override
     public Boolean call() {
-        writeToFile("icssas_event_");
+        writeToFile("icssas_event-");
         return true;
     }
 
@@ -71,9 +68,5 @@ public class Event extends AbstractSqlFile {
                 throw new IllegalArgumentException();
         }
         return _sql;
-    }
-
-    private double port() {
-        return Math.floor(Math.random() * 100 + 1);
     }
 }

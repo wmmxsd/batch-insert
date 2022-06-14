@@ -10,7 +10,7 @@ public class EventScript extends AbstractScript {
 
     @Override
     public Boolean call() {
-        runScript("icssas_event_");
+        runScript("icssas_event-");
         return true;
     }
 }

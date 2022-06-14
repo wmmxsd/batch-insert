@@ -10,7 +10,7 @@ public class DatabaseAlarmScript extends AbstractScript {
 
     @Override
     public Boolean call() {
-        runScript("icssas_alarm_database");
+        runScript("icssas_alarm_database-");
         return true;
     }
 }

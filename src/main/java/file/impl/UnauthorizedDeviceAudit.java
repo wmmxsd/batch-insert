@@ -11,7 +11,7 @@ public class UnauthorizedDeviceAudit extends AbstractSqlFile {
 
     @Override
     public String generateSql() {
-        return "INSERT INTO `n4a_audit_pt_undecided_20200001`" +
+        return "INSERT INTO `n4a_audit_pt_undecided_20200002`" +
                 "(`id`, `mac`, `deptid`, `deptidName`, `dosomething`, `dotime`, `warnlevel`, `ipsw`, `portsw`, `cidsw`)" +
                 " VALUES " +
                 "('" + UUIDUtil.get32UUID() + "', 'f1-91-28-3a-6d-37', '1004', '总部\\武汉', 204, '"+ NOW +"', 2, '10.10.1.50', 8, '0100000858a5ea03a0000000000000000000000000000000000000000000000000000000000000');";

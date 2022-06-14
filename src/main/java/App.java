@@ -3,12 +3,17 @@ import file.factory.SqlFileFactory;
 import file.factory.impl.ScriptFactoryImpl;
 import file.factory.impl.SqlFileFactoryImpl;
 import sql.Script;
+import utils.DuridConfig;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -18,10 +23,12 @@ import static utils.FileUtil.deletFile;
 
 public class App {
     public static void main(String[] args) throws IOException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        Instant begin = Instant.now();
+        System.out.println("args :" + Arrays.toString(args));
         if (args.length == 1) {
             SQL_COUNTS_IN_FILE = Integer.parseInt(args[0]);
         }
-        if (args.length == 2) {
+        if (args.length > 1) {
             SQL_COUNTS_IN_FILE = Integer.parseInt(args[0]);
             CIRCLE = Integer.parseInt(args[1]);
         }
@@ -78,21 +85,23 @@ public class App {
         deletFile(Paths.get(DIRECTORY_PATH).toString());
         System.out.println("删除" + DIRECTORY_PATH + "：end");
 
-        System.out.println("批量导入审计：successful");
+        Instant end = Instant.now();
+        ;
+        System.out.println("批量导入审计：successful。耗时："  + Duration.between(begin, end).toMillis() + "毫秒");
     }
 
 
     public static ExecutorService buildThreadPool() {
         System.out.println("创建批量将sql写入到文件的线程池-end");
         AtomicInteger index = new AtomicInteger(0);
-        return new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors() * 5, Runtime.getRuntime().availableProcessors() * 10, 100,
-                TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), r -> new Thread(r, "sql-to-file-" + index.getAndIncrement()), new ThreadPoolExecutor.AbortPolicy());
+        return new ThreadPoolExecutor(100, 100, 100,
+                TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), r -> new Thread(r, "sql-to-file-" + index.getAndIncrement()), new ThreadPoolExecutor.CallerRunsPolicy());
     }
 
     public static ExecutorService buildThreadPool1() {
         System.out.println("创建批量将文件中的sql写入到数据库的线程池-end");
         AtomicInteger index = new AtomicInteger(0);
-        return new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors() * 5, Runtime.getRuntime().availableProcessors() * 10, 100,
-                TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), r -> new Thread(r, "file-to-db-" + index.getAndIncrement()), new ThreadPoolExecutor.AbortPolicy());
+        return new ThreadPoolExecutor(100, 100, 100,
+                TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), r -> new Thread(r, "file-to-db-" + index.getAndIncrement()), new ThreadPoolExecutor.CallerRunsPolicy());
     }
 }

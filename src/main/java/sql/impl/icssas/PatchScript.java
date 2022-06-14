@@ -10,7 +10,7 @@ public class PatchScript extends AbstractScript {
 
     @Override
     public Boolean call() {
-        runScript("icssas_patch_");
+        runScript("icssas_patch-");
         return true;
     }
 }

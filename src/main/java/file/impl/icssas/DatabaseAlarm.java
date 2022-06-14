@@ -4,12 +4,9 @@ import file.AbstractSqlFile;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
-import static file.BatchConfig.ip;
-import static file.BatchConfig.ipList;
+import static utils.ColumnValueUtil.ip;
 
 public class DatabaseAlarm extends AbstractSqlFile {
     private final Random random = new Random();
@@ -33,7 +30,7 @@ public class DatabaseAlarm extends AbstractSqlFile {
 
     @Override
     public Boolean call() {
-        writeToFile("icssas_alarm_database");
+        writeToFile("icssas_alarm_database-");
         return true;
     }
 }

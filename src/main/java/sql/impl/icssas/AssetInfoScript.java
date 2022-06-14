@@ -10,7 +10,7 @@ public class AssetInfoScript extends AbstractScript {
 
     @Override
     public Boolean call() {
-        runScript("icssas_asset_info_");
+        runScript("icssas_asset_info-");
         return true;
     }
 }
